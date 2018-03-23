@@ -1,2 +1,2 @@
 # home-dashboard
-A dashboard to help with smart home devices and more
+Dashboard for smart home devices and more

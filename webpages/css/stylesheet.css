@@ -1,0 +1,99 @@
+html, body {
+  background-color: rgba(35, 39, 43, 1);
+  height: 100vh;
+  color: rgba(185, 193, 202, 1);
+  font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,Arial,sans-serif;
+}
+
+#side-bar {
+  background-color: rgba(22, 25, 28, 1);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+#side-bar-inner {
+  height: 30vh;
+  width: 100%;
+}
+
+.side-bar-button {
+  width: 4vw;
+  height: 4vw;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.side-bar-button.active {
+  background-color: rgba(65, 90, 206, 1);
+  color: rgba(247, 247, 253, 1);
+}
+
+main {
+  height: 100vh;
+  padding: 60px 80px !important;
+  color:
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 200;
+  color: rgba(185, 193, 202, 1);
+  padding: 0;
+  margin: 0 0 5px 0;
+  letter-spacing: 0.5px;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 200;
+  color: rgba(90, 101, 111, 1);
+  margin-bottom: 40px;
+}
+
+.page {
+  height: 60vh;
+}
+
+.item {
+  height: 20vw;
+  width: 20vw;
+  background-color: rgba(58, 65, 71, 1);
+  -webkit-box-shadow: 0px 0px 20px 1px rgba(30,30,30,0.8);
+  -moz-box-shadow: 0px 0px 20px 1px rgba(30,30,30,0.8);
+  box-shadow: 0px 0px 20px 1px rgba(30,30,30,0.8);
+  position: relative;
+}
+
+.item>p {
+  font-size: 12px;
+  padding: 15px 0 0 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(148, 152, 160, 1);
+  position: absolute;
+}
+
+.item>.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.item>.status>p {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 200;
+}
+
+#home {
+  display: block;
+}
+
+#alexa {
+  display: none;
+}
