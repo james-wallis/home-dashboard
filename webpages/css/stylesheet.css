@@ -207,24 +207,6 @@ footer div#spotify-play-pause #play-icon {
 footer div#spotify-play-pause #pause-icon {
   display: none;
 }
-/*
-footer div#spotify-previous {
-  text-align: right;
-}
-
-footer div#spotify-next {
-  text-align: left;
-} */
-
-/* footer div#spotify-shuffle {
-  text-align: right;
-  padding: 0;
-}
-
-footer div#spotify-repeat {
-  text-align: left;
-  padding: 0;
-} */
 
 footer div#spotify-repeat #repeat-fa-single {
   display: none;
@@ -238,16 +220,15 @@ footer input#spotify-volume {
   height: 100%;
 }
 
-/* SPOTIFY END */
-input[type=range] {
+footer input[type=range] {
   -webkit-appearance: none;
   width: 100%;
   margin: 5.75px 0;
 }
-input[type=range]:focus {
+footer input[type=range]:focus {
   outline: none;
 }
-input[type=range]::-webkit-slider-runnable-track {
+footer input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 6.5px;
   cursor: pointer;
@@ -256,7 +237,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border-radius: 25px;
   border: 0px solid rgba(1, 1, 1, 0);
 }
-input[type=range]::-webkit-slider-thumb {
+footer input[type=range]::-webkit-slider-thumb {
   box-shadow: 0px 0px 8.7px #000000, 0px 0px 0px #0d0d0d;
   border: 0px solid rgba(0, 0, 0, 0);
   height: 18px;
@@ -267,10 +248,10 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -5.75px;
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
+footer input[type=range]:focus::-webkit-slider-runnable-track {
   background: #b3b3b3;
 }
-input[type=range]::-moz-range-track {
+footer input[type=range]::-moz-range-track {
   width: 100%;
   height: 6.5px;
   cursor: pointer;
@@ -279,7 +260,7 @@ input[type=range]::-moz-range-track {
   border-radius: 25px;
   border: 0px solid rgba(1, 1, 1, 0);
 }
-input[type=range]::-moz-range-thumb {
+footer input[type=range]::-moz-range-thumb {
   box-shadow: 0px 0px 8.7px #000000, 0px 0px 0px #0d0d0d;
   border: 0px solid rgba(0, 0, 0, 0);
   height: 18px;
@@ -288,7 +269,7 @@ input[type=range]::-moz-range-thumb {
   background: #b9c1ca;
   cursor: pointer;
 }
-input[type=range]::-ms-track {
+footer input[type=range]::-ms-track {
   width: 100%;
   height: 6.5px;
   cursor: pointer;
@@ -296,19 +277,19 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
+footer input[type=range]::-ms-fill-lower {
   background: #b3b3b3;
   border: 0px solid rgba(1, 1, 1, 0);
   border-radius: 50px;
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
 }
-input[type=range]::-ms-fill-upper {
+footer input[type=range]::-ms-fill-upper {
   background: #b3b3b3;
   border: 0px solid rgba(1, 1, 1, 0);
   border-radius: 50px;
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
 }
-input[type=range]::-ms-thumb {
+footer input[type=range]::-ms-thumb {
   box-shadow: 0px 0px 8.7px #000000, 0px 0px 0px #0d0d0d;
   border: 0px solid rgba(0, 0, 0, 0);
   height: 18px;
@@ -318,9 +299,21 @@ input[type=range]::-ms-thumb {
   cursor: pointer;
   height: 6.5px;
 }
-input[type=range]:focus::-ms-fill-lower {
+footer input[type=range]:focus::-ms-fill-lower {
   background: #b3b3b3;
 }
-input[type=range]:focus::-ms-fill-upper {
+footer input[type=range]:focus::-ms-fill-upper {
   background: #b3b3b3;
 }
+
+
+/* SPOTIFY END */
+
+/* HUE START */
+
+.hue-light-percentage {
+  font-size: 30px;
+  text-align: center;
+}
+
+/* HUE END */

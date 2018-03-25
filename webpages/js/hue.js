@@ -7,8 +7,8 @@ var smartHomeStatus = {
 function hueWidget() {
 
   var s = document.createElement('div');
-  s.id = 'hue-widget';
-  s.className = 'widget';
+  s.id = 'ceiling-light';
+  s.className = 'widget hue-widget';
 
   var p = document.createElement('p');
   p.innerHTML = 'Hue';
@@ -27,10 +27,9 @@ function hueWidget() {
   return s;
 }
 
-
-$('#hue-widget').click(function() {
+$('body').on('click touchstart','#ceiling-light', function(e) {
   socket.emit('hue:light_1');
-  var html = $('#hue-widget .status p');
+  var html = $('#ceiling-light .status p');
   if (smartHomeStatus.hue.light_1) {
     html.text('0%');
   } else {
@@ -49,8 +48,4 @@ function updateHue(obj) {
     smartHomeStatus.hue.light_1 = false;
     html.text('0%');
   }
-}
-
-function hueDashboard() {
-
 }

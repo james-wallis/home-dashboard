@@ -4,8 +4,8 @@ $(function(){
 
 function dashboard() {
   var widgetWidth = $(window).width() * 0.15; // 15vw .widget
-  var dashboardListUpper = [hueWidget(),hueWidget(),hueWidget(),hueWidget()];
-  var dashboardListLower = [hueWidget(),hueWidget(),hueWidget(),hueWidget()];
+  var dashboardListUpper = [hueWidget()];
+  var dashboardListLower = [];
   $('h1').text('Dashboard');
   $('h2').text('Smart home control panel');
   $('#dashboard-button').addClass('active');
