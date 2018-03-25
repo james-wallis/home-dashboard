@@ -14,40 +14,23 @@
     <div class="container-fluid">
       <div class="row align-items-center">
         <!-- side bar start -->
-        <aside id="side-bar" class="col-sm-1">
-          <div id="side-bar-inner">
-            <div class="side-bar-button active">
-              <i class="far fa-home"></i>
-            </div>
-            <div class="side-bar-button">
-              <i class="fab fa-amazon"></i>
-            </div>
-          </div>
-        </aside>
+        <aside id="side-bar" class="col-sm-1"></aside>
         <!-- side bar end -->
         <!-- main content start -->
         <main class="col-sm-11">
-          <div class="row">
+          <header class="row">
             <div class="col-12">
               <h1>Dashboard</h1>
               <h2>Smart home control panel</h2>
             </div>
-          </div>
+          </header>
           <!-- dashboard pages start -->
-          <div id="dashboard-page-container">
-            <div id="home" class="page">
-              <div id="hue-light" class="item">
-                <p>Hue Light</p>
-                <div class="status">
-                  <p>100%</p>
-                </div>
-              </div>
-            </div>
-            <div id="alexa" class="page">
-              <iframe src="https://alexa.amazon.co.uk/" width="100%" height="100%"></iframe>
-            </div>
+          <div id="dashboard-container">
+            <div id="dashboard" class="page"></div>
+            <div id="spotify" class="page"></div>
           </div>
           <!-- dashboard pages end -->
+          <footer></footer>
         </main>
         <!-- main content end -->
       </div>
@@ -56,7 +39,11 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>var socket = io();</script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="include.js"></script>
   <script type="text/javascript" src="scripts.js"></script>
+  <script type="text/javascript" src="dashboard.js"></script>
+  <script type="text/javascript" src="hue.js"></script>
+  <script type="text/javascript" src="spotify.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script type="text/javascript" src="fa.js"></script>
   <script type="text/javascript" src="bootstrap.min.js"></script>
