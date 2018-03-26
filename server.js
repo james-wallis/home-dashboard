@@ -9,6 +9,7 @@ const io = require('socket.io')(http);
 const hueApi = require('node-hue-api');
 
 // Modules
+const GoogleMaps = require('./modules/googlemaps.js');
 const Hue = require('./modules/hue.js');
 const Spotify = require('./modules/spotify.js');
 
@@ -22,14 +23,24 @@ app.get('/', function(req, res) {
 
 // Global variables
 let hue = null;
+let firstSearch = true;
 const port = 3000;
-const searchInterval = 0.5 * 1000; // first number is the amount of seconds to wait
+const fastSearchInterval = 0.5 * 1000; // first number is the amount of seconds to wait
+const slowSearchInterval = 5 * 60 * 1000; // first number is the amount of minutes to wait
 let status = {
+  googlemaps: {
+    routes: []
+  },
   hue: {
     light_1: null
-  }
+  },
+  spotify: {}
 }
-
+const googlemaps = new GoogleMaps({
+  key: process.env.GOOGLE_MAPS_DIRECTIONS_API_KEY,
+  origin: 'SO172FE',
+  destination: 'IBM Hursley'
+});
 const spotify = new Spotify({
   app: app,
   client_id: process.env.SPOTIFY_CLIENT_ID,
@@ -68,15 +79,37 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function(){
    console.log('user disconnected');
   });
+  googleMapsSocket(socket);
   hueSocket(socket);
   spotifySocket(socket);
 
 });
 
+function googleMapsSocket(socket) {
+  socket.on('google-maps-route', function() {
+    googlemaps.directions();
+  });
+}
+
 function hueSocket(socket) {
-  socket.on('hue:light_1', function() {
-   console.log('received');
-   hue.toggle();
+  socket.on('hue-light-toggle', function() {
+    hue.lights(function(err, data) {
+      for (var i = 0; i <= data.lights.length; i++) {
+        if (data.lights[i].name.indexOf('Light') > -1) {
+          hue.toggle(i+1);
+        }
+      }
+    });
+  });
+
+  socket.on('hue-lamps-toggle', function() {
+    hue.lights(function(err, data) {
+      for (var i = 0; i <= data.lights.length; i++) {
+        if (data.lights[i].name.indexOf('lamp') > -1) {
+          hue.toggle(i+1);
+        }
+      }
+    });
   });
 }
 
@@ -140,11 +173,38 @@ function spotifySocket(socket) {
 /**
  * Function to get the status of different smart home devices
  */
-function getStatus() {
-  if (hue) {
-    hue.lightStatus(1, function(err, result) {
-      status.hue.light_1 = result.state.on;
+function getStatus(periodicStatus) {
+  // periodicStatus is the flag for longer wait intervals
+  if (periodicStatus || firstSearch) {
+    googlemaps.directions(function(routes) {
+      status.googlemaps.routes = routes;
     });
+    firstSearch = false;
+  }
+  if (hue) {
+    let lights = {};
+    let lamps = {};
+    hue.lights(function(err, data) {
+      for (var i = 0; i <= data.lights.length; i++) {
+        hue.lightStatus(i, function(err, result) {
+          if (result.name.indexOf('lamp') > -1) {
+            lamps[result.name] = {
+              state: result.state
+            }
+          } else {
+            lights[result.name] = {
+              state: result.state
+            };
+          }
+          if ((Object.keys(lamps).length + Object.keys(lights).length) == data.lights.length) {
+            status.hue = {
+              lamps: lamps,
+              lights: lights
+            }
+          }
+        });
+      }
+    })
   }
   spotify.authorized(function(auth) {
     if (auth) {
@@ -178,4 +238,5 @@ function sendStatus() {
   io.emit('status', status)
 }
 
-setInterval(getStatus, searchInterval);
+setInterval(getStatus, fastSearchInterval);
+setInterval(getStatus, slowSearchInterval, true);

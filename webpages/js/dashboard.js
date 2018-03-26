@@ -4,7 +4,7 @@ $(function(){
 
 function dashboard() {
   var widgetWidth = $(window).width() * 0.15; // 15vw .widget
-  var dashboardListUpper = [hueWidget()];
+  var dashboardListUpper = [hueLightWidget(), hueDoubleLampWidget(), googleMapsWidget()];
   var dashboardListLower = [];
   $('h1').text('Dashboard');
   $('h2').text('Smart home control panel');

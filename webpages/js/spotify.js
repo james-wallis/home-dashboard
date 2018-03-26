@@ -133,36 +133,37 @@ function spotify() {
 }
 
 function updateSpotify(info) {
-  nowPlaying = info.now_playing;
-  playerInfo = info.player_info;
-  // console.log(playerInfo);
-  $('.spotify-now-playing-name').text(nowPlaying.name);
-  var artists = concatArtists(nowPlaying);
-  $('.spotify-now-playing-artists').text(artists);
-  $('.spotify-now-playing-image').attr('src', nowPlaying.images[0].url);
-  $('.spotify-now-playing-placeholder').hide();
-  $('.spotify-now-playing-image').show();
-  if (nowPlaying.playing != playing && playingTimeout <= 0) {
-    playing = nowPlaying.playing;
-    updatePlaying();
+  if (info && (Object.keys(info).length > 0)) {
+    nowPlaying = info.now_playing;
+    playerInfo = info.player_info;
+    // console.log(playerInfo);
+    $('.spotify-now-playing-name').text(nowPlaying.name);
+    var artists = concatArtists(nowPlaying);
+    $('.spotify-now-playing-artists').text(artists);
+    $('.spotify-now-playing-image').attr('src', nowPlaying.images[0].url);
+    $('.spotify-now-playing-placeholder').hide();
+    $('.spotify-now-playing-image').show();
+    if (nowPlaying.playing != playing && playingTimeout <= 0) {
+      playing = nowPlaying.playing;
+      updatePlaying();
+    }
+    if (playerInfo.repeat != repeat && repeatTimeout <=0) {
+      var index = repeatStates.indexOf(playerInfo.repeat);
+      repeat = index;
+      updateRepeat();
+    }
+    if (playerInfo.shuffle != shuffle && shuffleTimeout <= 0) {
+      shuffle = playerInfo.shuffle;
+    }
+    if (volumeTimeout <= 0) {
+      updateVolume(playerInfo.volume);
+    }
+    updateShuffle();
+    playingTimeout--;
+    repeatTimeout--;
+    shuffleTimeout--;
+    volumeTimeout--;
   }
-  if (playerInfo.repeat != repeat && repeatTimeout <=0) {
-    var index = repeatStates.indexOf(playerInfo.repeat);
-    repeat = index;
-    updateRepeat();
-  }
-  if (playerInfo.shuffle != shuffle && shuffleTimeout <= 0) {
-    shuffle = playerInfo.shuffle;
-  }
-  if (volumeTimeout <= 0) {
-    updateVolume(playerInfo.volume);
-  }
-  updateShuffle();
-  playingTimeout--;
-  repeatTimeout--;
-  shuffleTimeout--;
-  volumeTimeout--;
-
 
 };
 

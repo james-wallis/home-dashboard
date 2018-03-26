@@ -82,17 +82,15 @@ Hue.prototype.lightStatus = function(id, callback) {
  * TODO If I get more lights, handle for this.
  *      At the moment I have one so the ID will always be one.
  */
-Hue.prototype.toggle = function(callback) {
-  console.log('toggle');
-  let id = 1; // 1 light only
+Hue.prototype.toggle = function(id, callback) {
   let api = this.api;
+  console.log('toggle' + id);
   api.lightStatus(id, function(err, result) {
+    console.log(result);
     if (err) {
       ((typeof callback === 'function') ? callback(err) : console.error(err));
     } else {
-      console.log(result.state);
       if (result.state.on) {
-        console.log(this.api);
         api.setLightState(id, {'on': false}, function(err, res) {
           if (err) {
             ((typeof callback === 'function') ? callback(err) : console.error(err));

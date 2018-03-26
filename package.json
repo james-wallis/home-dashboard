@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/jamesemwallis/home-dashboard#readme",
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "node-hue-api": "^2.4.2",
+    "node-rest-client": "^3.1.0",
     "socket.io": "^2.0.4",
     "spotify-web-api-node": "git://github.com/jamesemwallis/spotify-web-api-node.git#add-device-option"
   }
