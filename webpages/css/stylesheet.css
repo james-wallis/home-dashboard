@@ -173,6 +173,33 @@ h2 {
   display: none;
 }
 
+#spotify h3 {
+  padding: 20px 0;
+  font-size: 18px;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+#spotify-device-container {
+  text-align: center;
+}
+
+#spotify-device-container div {
+  padding: 20px 2px;
+}
+
+#spotify-device-container div.active {
+  border: 1px solid #1db954;
+  border-radius: 3px;
+}
+
+#spotify-device-container h4 {
+  font-size: 14px;
+  font-weight: 100;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
 .spotify-widget {
   text-align: left;
   font-size: 16px;

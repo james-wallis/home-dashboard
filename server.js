@@ -34,7 +34,6 @@ let status = {
     routes: []
   },
   hue: {
-    light_1: null
   },
   spotify: {},
   timer: {
@@ -202,6 +201,12 @@ function spotifySocket(socket) {
     });
   })
 
+  socket.on('spotify-device', function(opts) {
+    spotify.device(opts, function(err) {
+      if (err) console.error(err);
+    });
+  });
+
 }
 
 function timerSocket(socket) {
@@ -298,6 +303,11 @@ function getStatus(periodicStatus) {
             }
           }
           status.spotify = s;
+        }
+      });
+      spotify.devices(function(err, data) {
+        if (data && data.devices) {
+          status.spotify.devices = data.devices;
         }
       });
     }

@@ -26,6 +26,7 @@ $('body').on('click touchstart','#spotify-play-pause', function(e) {
   playingTimeout = 2;
   updatePlaying();
 });
+
 function updatePlaying() {
   if (playing) {
     $('#spotify-play-pause #play-icon').hide();
@@ -124,16 +125,37 @@ function spotify() {
   $('h2').text('Music player');
   $('#spotify').show();
   $('#spotify-button').addClass('active');
+  $('#spotify').html('');
   if (!authenticated) {
     var a = document.createElement('a');
     a.setAttribute('href', auth_url);
     a.innerHTML = 'Click here to authenticate with Spotify.';
     document.getElementById('spotify').appendChild(a);
+  } else {
+    var r = document.createElement('div');
+    r.className = 'row';
+
+    var c = document.createElement('div');
+    c.className = 'col-sm-12';
+
+    var h = document.createElement('h3');
+    h.innerHTML = 'Available devices';
+
+    c.appendChild(h);
+    r.appendChild(c);
+    document.getElementById('spotify').appendChild(r);
+
+    r = document.createElement('div');
+    r.className = 'row';
+    r.id = 'spotify-device-container';
+
+
+    document.getElementById('spotify').appendChild(r);
   }
 }
 
 function updateSpotify(info) {
-  if (info && (Object.keys(info).length > 0)) {
+  if (info && (Object.keys(info).length > 0) && info.now_playing && info.player_info) {
     nowPlaying = info.now_playing;
     playerInfo = info.player_info;
     // console.log(playerInfo);
@@ -163,9 +185,60 @@ function updateSpotify(info) {
     repeatTimeout--;
     shuffleTimeout--;
     volumeTimeout--;
+
+    if (info.devices) {
+      updateDevices(info.devices);
+    }
+
   }
 
 };
+
+function updateDevices(info) {
+  var cont = document.getElementById('spotify-device-container');
+  if (info && info.length > 0 && cont) {
+    console.log(info);
+    var info = info.sort(compare);
+    console.log(info);
+    cont.innerHTML = '';
+    for (var i = 0; i < info.length; i++) {
+      var device = info[i];
+      var col = document.createElement('div');
+      col.className = 'col-sm spotify-device';
+      col.setAttribute('data-spotify-device', device.id);
+      if (device.is_active) col.className = 'col-sm active';
+
+
+      var h = document.createElement('h4');
+      h.innerHTML = device.name;
+
+
+      var fa = document.createElement('i');
+      var type = device.type.toLowerCase();
+      if (type == 'computer') {
+        fa.className = 'fal fa-desktop-alt fa-2x';
+      } else if (type == 'tv') {
+        fa.className = 'fal fa-tv fa-2x';
+      } else {
+        fa.className = 'fal fa-volume-up fa-2x';
+      }
+      col.appendChild(h);
+      col.appendChild(fa);
+      cont.appendChild(col);
+    }
+  }
+}
+
+$('body').on('click touchstart','.spotify-device', function(e) {
+  $('#spotify-device-container div.active').removeClass('active');
+  $(this).addClass('active');
+  var id = $(this).attr('data-spotify-device');
+  var opts = {
+    deviceIds: [id],
+    play: playing
+  };
+  socket.emit('spotify-device', opts);
+});
 
 function concatArtists(track) {
   var artists = '';
@@ -174,6 +247,14 @@ function concatArtists(track) {
     if (!i+1 == track.artists.length) artists += ', ';
   }
   return artists;
+}
+
+function compare(a,b) {
+  if (a.name < b.name)
+    return -1;
+  if (a.name > b.name)
+    return 1;
+  return 0;
 }
 
 socket.on('spotify_authenticated', function(data) {

@@ -54,6 +54,26 @@ Spotify.prototype.authorized = function(callback) {
   }
 }
 
+Spotify.prototype.device = function(opts, callback) {
+  this.api.transferMyPlayback(opts, function(err, data) {
+    if (err) {
+      ((typeof callback === 'function') ? callback(err) : console.error(err));
+    } else {
+      ((typeof callback === 'function') ? callback(null, data) : console.log(data));
+    }
+  });
+}
+
+Spotify.prototype.devices = function(callback) {
+  this.api.getMyDevices(function(err, data) {
+    if (err) {
+      ((typeof callback === 'function') ? callback(err) : console.error(err));
+    } else {
+      ((typeof callback === 'function') ? callback(null, data.body) : console.log(data));
+    }
+  });
+}
+
 Spotify.prototype.getPlaybackInfo = function(callback) {
   this.api.getMyCurrentPlaybackState({}, function(err, data) {
     if (err) {

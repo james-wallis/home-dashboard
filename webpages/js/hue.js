@@ -115,6 +115,7 @@ function hueDoubleLampWidget() {
 function updateHue(obj) {
   var percentage;
   // Update light
+  if (Object.keys(obj).length === 0 && obj.constructor === Object) return;
   var light = obj.lights['Light'];
   percentage = 100*(light.state.bri/maxLight);
   if (light.state.on) {
