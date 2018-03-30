@@ -4,7 +4,7 @@ $(function(){
 
 function dashboard() {
   var widgetWidth = $(window).width() * 0.15; // 15vw .widget
-  var dashboardListUpper = [hueLightWidget(), hueDoubleLampWidget(), googleMapsWidget()];
+  var dashboardListUpper = [hueLightWidget(), hueDoubleLampWidget(), googleMapsWidget(), timerWidget()];
   var dashboardListLower = [];
   $('h1').text('Dashboard');
   $('h2').text('Smart home control panel');
@@ -36,4 +36,10 @@ function dashboard() {
 
   $('#dashboard').show();
 
+}
+
+function placeholder() {
+  var s = document.createElement('div');
+  s.className = 'widget placeholder-widget';
+  return s;
 }

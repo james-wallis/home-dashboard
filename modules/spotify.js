@@ -107,8 +107,6 @@ Spotify.prototype.previous = function(callback) {
 Spotify.prototype.repeat = function(opts, callback) {
   if (!opts) throw new Error('No repeat state given');
   this.api.setRepeat(opts, function(err, data) {
-    console.log(err);
-    console.log(data);
     if (err) {
       ((typeof callback === 'function') ? callback(err) : console.error(err));
     } else {

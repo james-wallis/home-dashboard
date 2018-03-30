@@ -1,4 +1,11 @@
 var maxLight = 254;
+var brightness = {
+  light: 0,
+  lamps: {
+    left: 0,
+    right: 0
+  }
+}
 
 // Event listeners
 $('body').on('click touchstart','#hue-light', function(e){
@@ -139,7 +146,84 @@ function updateHue(obj) {
   percentage = 100*(rightLamp.state.bri/maxLight);
   $('.hue-right-lamp-percentage').text(Math.round(percentage) + '%');
 
+  brightness.light = light.state.bri;
+  brightness.lamps.left = leftLamp.state.bri;
+  brightness.lamps.right = rightLamp.state.bri;
 
+}
+
+function hue() {
+  $('h1').text('Hue');
+  $('h2').text('Smart lights');
+  $('#hue').show();
+  $('#hue-button').addClass('active');
+  var hueHeight = $(window).height() - ($('header').height() + $('header').offset().top + $('footer').height());
+  $('#hue').height(hueHeight + 'px');
+  var html = '<div class="row">';
+  html += '<div class="col-sm-6">';
+  html += '<div class="hue-height">'
+  html += '<div class="col-sm-12"><h3>Bedroom Light</h3></div>'
+  html += '<div class="col-sm-12"><p class="hue-light-state"></p></div>'
+  html += '<div class="col-sm-12"><p class="hue-light-percentage"></p></div>'
+  html += '</div>';
+  html += '<div class="col-sm-12"><div class="hue-light-slider"></div></div>'
+  html += '</div>';
+  html += '<div class="col-sm-6">';
+  html += '<div class="hue-height">'
+  html += '<div class="col-sm-12"><h3>Bedroom Lamps</h3></div>';
+  html += '<div class="col-sm-12"><div class="col-sm-6 hue-lamp"><p>Left</p></div><div class="col-sm-6 hue-lamp"><p>Right</p></div></div>'
+  html += '<div class="col-sm-12"><div class="col-sm-6 hue-lamp"><p class="hue-left-lamp-state"></p></div><div class="col-sm-6 hue-lamp"><p class="hue-right-lamp-state"></p></div></div>'
+  html += '<div class="col-sm-12"><div class="col-sm-6 hue-lamp"><p class="hue-left-lamp-percentage"></p></div><div class="col-sm-6 hue-lamp"><p class="hue-right-lamp-percentage"></p></div></div>'
+  html += '</div>';
+  html += '<div class="col-sm-12"><div class="hue-lamp-slider"></div></div>'
+  html += '</div>';
+  // html += '<div class="col-sm-4">';
+  // html += '</div>';
+  html += '</div>';
+  // var input = '<input class="hue-brightness" type="range" min="0" max="100" value="50">';
+  $('#hue').html(html);
+  noUiSlider.create($('.hue-light-slider')[0], {
+  	start: 0, // 4 handles, starting at...
+  	orientation: 'vertical', // Orient the slider vertically
+  	behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+  	step: 5,
+    direction: 'rtl',
+  	range: {
+  		'min': 0,
+  		'max': 100
+  	},
+    pips: { mode: 'count', values: 5, density: 5 }
+  });
+  $('.hue-light-slider')[0].noUiSlider.on('slide', function(value){
+  	// convert percentage to value out of 254
+    value = value * 2.54;
+    socket.emit('hue-light-value', value);
+  });
+
+  noUiSlider.create($('.hue-lamp-slider')[0], {
+  	start: 0, // 4 handles, starting at...
+  	orientation: 'vertical', // Orient the slider vertically
+  	behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+  	step: 5,
+    direction: 'rtl',
+  	range: {
+  		'min': 0,
+  		'max': 100
+  	},
+    pips: { mode: 'count', values: 5, density: 5 }
+  });
+  $('.hue-lamp-slider')[0].noUiSlider.on('slide', function(value){
+  	// convert percentage to value out of 254
+    value = value * 2.54;
+    socket.emit('hue-lamps-value', value);
+  });
+
+  $('.hue-light-slider')[0].noUiSlider.set(brightness.light);
+  if (brightness.lamps.left > brightness.lamps.right) {
+    $('.hue-lamp-slider')[0].noUiSlider.set(brightness.lamps.left - (brightness.lamps.left - brightness.lamps.right));
+  } else {
+    $('.hue-lamp-slider')[0].noUiSlider.set(brightness.lamps.right - (brightness.lamps.right - brightness.lamps.left));
+  }
 
 
 }

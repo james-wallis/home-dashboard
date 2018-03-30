@@ -12,6 +12,8 @@ const hueApi = require('node-hue-api');
 const GoogleMaps = require('./modules/googlemaps.js');
 const Hue = require('./modules/hue.js');
 const Spotify = require('./modules/spotify.js');
+const Timer = require('timer-stopwatch');
+
 
 // Express app.use
 app.use(express.static(__dirname + '/webpages/css'));
@@ -34,7 +36,11 @@ let status = {
   hue: {
     light_1: null
   },
-  spotify: {}
+  spotify: {},
+  timer: {
+    time: 0,
+    done: false
+  }
 }
 const googlemaps = new GoogleMaps({
   key: process.env.GOOGLE_MAPS_DIRECTIONS_API_KEY,
@@ -47,6 +53,20 @@ const spotify = new Spotify({
   client_secret: process.env.SPOTIFY_CLIENT_SECRET,
   redirect_uri: `http://localhost:${port}`,
   redirect_endpoint: '/spotify/callback'
+});
+let time = 0;
+let timer = new Timer(time , { refreshRateMS: 500 });
+timer.onTime(function(t) {
+  if (status.timer.done || status.timer.reset) {
+    time = 0;
+  } else {
+    console.log(Math.round(t.ms / 1000));
+    time = t.ms;
+    status.timer.time = Math.round(t.ms / 1000);
+  }
+});
+timer.onDone(function(){
+    status.timer.done = true;
 });
 
 /**
@@ -82,6 +102,7 @@ io.on('connection', function(socket) {
   googleMapsSocket(socket);
   hueSocket(socket);
   spotifySocket(socket);
+  timerSocket(socket);
 
 });
 
@@ -102,11 +123,31 @@ function hueSocket(socket) {
     });
   });
 
+  socket.on('hue-light-value', function(value) {
+    hue.lights(function(err, data) {
+      for (var i = 0; i <= data.lights.length; i++) {
+        if (data.lights[i].name.indexOf('Light') > -1) {
+          hue.dim(i+1, value);
+        }
+      }
+    });
+  });
+
   socket.on('hue-lamps-toggle', function() {
     hue.lights(function(err, data) {
       for (var i = 0; i <= data.lights.length; i++) {
         if (data.lights[i].name.indexOf('lamp') > -1) {
           hue.toggle(i+1);
+        }
+      }
+    });
+  });
+
+  socket.on('hue-lamps-value', function(value) {
+    hue.lights(function(err, data) {
+      for (var i = 0; i <= data.lights.length; i++) {
+        if (data.lights[i].name.indexOf('lamp') > -1) {
+          hue.dim(i+1, value);
         }
       }
     });
@@ -162,6 +203,39 @@ function spotifySocket(socket) {
   })
 
 }
+
+function timerSocket(socket) {
+  socket.on('timer-increase', function() {
+    if (status.timer.done) {
+      time = 0;
+      status.timer.done = false;
+    }
+    console.log('time', time);
+    if (time < 5 * 60000) {
+      time += (0.5 * 60000);
+    } else if (time < 20 * 60000) {
+      time += (1 * 60000);
+    } else {
+      time += (5 * 60000);
+    }
+    timer.reset(time);
+    timer.start();
+  });
+
+  socket.on('timer-reset', function() {
+    timer.stop();
+    status.timer.time = 0;
+    time = 0;
+    timer.reset();
+    status.timer.done = true;
+  });
+
+  socket.on('timer-notified', function() {
+    status.timer.done = false;
+  });
+}
+
+
 
 
 //

@@ -46,11 +46,17 @@ function updateGoogleMaps(routes) {
       h = document.createElement('h3');
       h.className = 'google-maps-widget';
       h.innerHTML = route.name;
+      if (noRoutes > 2) {
+        h.style.fontSize = '8px';
+      }
       d.appendChild(h);
 
       p = document.createElement('p');
       p.className = 'google-maps-duration';
       p.innerHTML = route.duration.text;
+      if (noRoutes > 2) {
+        p.style.fontSize = '12px';
+      }
       d.appendChild(p);
 
       el.appendChild(d);

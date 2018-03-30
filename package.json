@@ -23,7 +23,9 @@
     "express": "^4.16.3",
     "node-hue-api": "^2.4.2",
     "node-rest-client": "^3.1.0",
+    "rangeslider.js": "^2.3.2",
     "socket.io": "^2.0.4",
-    "spotify-web-api-node": "git://github.com/jamesemwallis/spotify-web-api-node.git#add-device-option"
+    "spotify-web-api-node": "git://github.com/jamesemwallis/spotify-web-api-node.git#add-device-option",
+    "timer-stopwatch": "^0.2.0"
   }
 }

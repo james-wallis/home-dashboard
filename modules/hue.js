@@ -26,6 +26,29 @@ Hue.prototype.description = function(callback) {
 }
 
 /**
+ * Dim the lights
+ */
+Hue.prototype.dim = function(id, value, callback) {
+  if (value == 0) {
+    this.api.setLightState(id, {'bri': value, 'on': false}, function(err, res) {
+      if (err) {
+        ((typeof callback === 'function') ? callback(err) : console.error(err));
+      } else {
+        ((typeof callback === 'function') ? callback(null, res) : console.log(res));
+      }
+    });
+  } else {
+    this.api.setLightState(id, {'bri': value, 'on': true}, function(err, res) {
+      if (err) {
+        ((typeof callback === 'function') ? callback(err) : console.error(err));
+      } else {
+        ((typeof callback === 'function') ? callback(null, res) : console.log(res));
+      }
+    });
+  }
+}
+
+/**
  * Get Hue config
  */
 Hue.prototype.config = function(callback) {
@@ -84,9 +107,7 @@ Hue.prototype.lightStatus = function(id, callback) {
  */
 Hue.prototype.toggle = function(id, callback) {
   let api = this.api;
-  console.log('toggle' + id);
   api.lightStatus(id, function(err, result) {
-    console.log(result);
     if (err) {
       ((typeof callback === 'function') ? callback(err) : console.error(err));
     } else {

@@ -10,9 +10,14 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400" rel="stylesheet">
   <link rel="stylesheet" href="bootstrap.min.css">
   <link rel="stylesheet" href="stylesheet.css">
+  <link href="nouislider.css" rel="stylesheet">
 </head>
   <body>
     <div class="container-fluid">
+      <div id='overlay' class='row' style="transition: all 200ms;">
+        <div class="col-sm-1"></div>
+        <div id='overlay-content' class="col-sm-11"> <h3>Timer Finished</h3> </div>
+      </div>
       <div class="row align-items-center">
         <!-- side bar start -->
         <aside id="side-bar" class="col-sm-1"></aside>
@@ -28,6 +33,7 @@
           <!-- dashboard pages start -->
           <div id="dashboard-container">
             <div id="dashboard" class="page"></div>
+            <div id="hue" class="page"></div>
             <div id="spotify" class="page"></div>
           </div>
           <!-- dashboard pages end -->
@@ -46,7 +52,9 @@
   <script type="text/javascript" src="googlemaps.js"></script>
   <script type="text/javascript" src="hue.js"></script>
   <script type="text/javascript" src="spotify.js"></script>
+  <script type="text/javascript" src="timer.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script type="text/javascript" src="fa.js"></script>
   <script type="text/javascript" src="bootstrap.min.js"></script>
+  <script src="nouislider.js"></script>
 </html>

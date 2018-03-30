@@ -33,6 +33,11 @@ html, body {
   color: rgba(247, 247, 253, 1);
 }
 
+.side-bar-button.active#hue-button {
+  background-color: #eeaf00;
+  color: rgba(247, 247, 253, 1);
+}
+
 .side-bar-button.active#spotify-button {
   background-color: #1db954;
   color: rgba(247, 247, 253, 1);
@@ -96,6 +101,56 @@ h2 {
   margin: 0;
   font-weight: 200;
 }
+
+/* OVERLAY START */
+
+#overlay {
+  height: 30vh;
+  width: 100vw;
+  position: absolute;
+  z-index: 8;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: -35vh;
+  transition: all 200ms;
+}
+
+#overlay-content {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(35, 39, 43, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(65, 90, 206, 0.2);
+}
+
+#overlay-content h3 {
+  text-transform: uppercase;
+  font-weight: 200;
+  letter-spacing: 1.6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid rgba(65, 90, 206, 1);
+}
+
+/* OVERLAY END */
+
+/* PLACEHOLDER START */
+
+.placeholder-widget {
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+/* PLACEHOLDER END */
 
 /* DASHBOARD START */
 
@@ -312,6 +367,47 @@ footer input[type=range]:focus::-ms-fill-upper {
 
 /* HUE START */
 
+#hue {
+  display: none;
+  text-align: center;
+}
+
+#hue .row {
+  padding-top: 50px;
+}
+
+#hue .hue-height {
+  height: 120px;
+}
+
+#hue h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 200;
+  padding-bottom: 20px;
+}
+
+#hue p {
+  text-transform: uppercase;
+  font-weight: 100;
+}
+
+.hue-light-slider, .hue-lamp-slider {
+  height: 300px;
+  margin: 30px auto 0 auto;
+}
+
+.hue-lamp {
+  display: inline-block;
+}
+
+.hue-lamp p {
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 100;
+}
+
 .hue-widget>.row {
   height: 100% !important;
   text-align: center;
@@ -367,9 +463,9 @@ footer input[type=range]:focus::-ms-fill-upper {
 }
 
 .google-maps-widget h3 {
-  font-size: 8px;
   color: rgba(148, 152, 160, 1);
   text-transform: uppercase;
+  font-size: 10px;
   letter-spacing: 1.2px;
   padding-bottom: 5px;
 }
@@ -379,7 +475,34 @@ footer input[type=range]:focus::-ms-fill-upper {
   letter-spacing: 1.2px;
   padding: 0;
   margin: 3px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* GOOGLE MAPS END */
+
+/* TIMER START */
+
+.timer-widget>.row {
+  height: 100% !important;
+  text-align: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.timer-widget h3 {
+  font-size: 8px;
+  color: rgba(148, 152, 160, 1);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding-bottom: 5px;
+}
+
+.timer-time {
+  margin: 0;
+  margin-top: 30px;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-weight: 100;
+}
+
+/* TIMER END */

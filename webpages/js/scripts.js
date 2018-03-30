@@ -10,6 +10,9 @@ $('body').on('click touchstart','.side-bar-button',function(e){
   $('.page').hide();
   $('.side-bar-button').removeClass('active');
   switch(this.id) {
+    case 'hue-button':
+      hue();
+      break;
     case 'spotify-button':
       spotify();
       break;
@@ -22,4 +25,5 @@ socket.on('status', function(info) {
   if (info.hue) updateHue(info.hue);
   if (info.spotify) updateSpotify(info.spotify);
   if (info.googlemaps) updateGoogleMaps(info.googlemaps.routes);
+  if (info.timer) updateTimer(info.timer);
 })
