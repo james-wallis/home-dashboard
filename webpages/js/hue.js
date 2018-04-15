@@ -151,13 +151,16 @@ function updateHue(obj) {
   brightness.lamps.left = leftLamp.state.bri;
   brightness.lamps.right = rightLamp.state.bri;
 
+  $('.hue-light-slider')[0].noUiSlider.set(brightness.light);
+  if (brightness.lamps.left > brightness.lamps.right) {
+    $('.hue-lamp-slider')[0].noUiSlider.set(brightness.lamps.left - (brightness.lamps.left - brightness.lamps.right));
+  } else {
+    $('.hue-lamp-slider')[0].noUiSlider.set(brightness.lamps.right - (brightness.lamps.right - brightness.lamps.left));
+  }
+
 }
 
 function hue() {
-  $('h1').text('Hue');
-  $('h2').text('Smart lights');
-  $('#hue').show();
-  $('#hue-button').addClass('active');
   var hueHeight = $(window).height() - ($('header').height() + $('header').offset().top + $('footer').height());
   $('#hue').height(hueHeight + 'px');
   var html = '<div class="row">';
@@ -225,6 +228,11 @@ function hue() {
   } else {
     $('.hue-lamp-slider')[0].noUiSlider.set(brightness.lamps.right - (brightness.lamps.right - brightness.lamps.left));
   }
+}
 
-
+function showHue() {
+  $('h1').text('Hue');
+  $('h2').text('Smart lights');
+  $('#hue').show();
+  $('#hue-button').addClass('active');
 }

@@ -4,6 +4,8 @@ $(window).bind('touchmove', function(e) {
     e.preventDefault();
   }
 });
+spotify();
+hue();
 
 
 $('body').on('click touchstart','.side-bar-button',function(e){
@@ -11,10 +13,10 @@ $('body').on('click touchstart','.side-bar-button',function(e){
   $('.side-bar-button').removeClass('active');
   switch(this.id) {
     case 'hue-button':
-      hue();
+      showHue();
       break;
     case 'spotify-button':
-      spotify();
+      showSpotify();
       break;
     default:
       dashboard();

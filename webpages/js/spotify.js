@@ -121,10 +121,6 @@ function spotifyWidget() {
 }
 
 function spotify() {
-  $('h1').text('Spotify');
-  $('h2').text('Music player');
-  $('#spotify').show();
-  $('#spotify-button').addClass('active');
   $('#spotify').html('');
   if (!authenticated) {
     var a = document.createElement('a');
@@ -152,6 +148,13 @@ function spotify() {
 
     document.getElementById('spotify').appendChild(r);
   }
+}
+
+function showSpotify() {
+  $('h1').text('Spotify');
+  $('h2').text('Music player');
+  $('#spotify').show();
+  $('#spotify-button').addClass('active');
 }
 
 function updateSpotify(info) {
