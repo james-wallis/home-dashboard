@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*! nouislider - 11.0.3 - 2018-01-21 14:04:07 */
 
 (function (factory) {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*!
  * Font Awesome Pro 5.0.6 by @fontawesome - http://fontawesome.com
  * License - http://fontawesome.com/license (Commercial License)

@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Stop website drag on ipad
 $(window).bind('touchmove', function(e) {
   if (e.target.id != 'spotify-volume') {

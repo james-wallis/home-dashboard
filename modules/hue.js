@@ -1,102 +1,73 @@
 // Packages
-const HueApi = require("node-hue-api").HueApi;
+const { HueApi } = require('node-hue-api');
 
 /**
  * Create the hue object
  * @param {Object} opts, the options
  */
-var Hue = function(opts) {
-  var self = this;
+const Hue = (opts) => {
   this.user = opts.user;
   this.bridge = opts.bridge;
   this.api = new HueApi(this.bridge.ipaddress, this.user);
-}
+};
 
 /**
  * Get full description of the bridge
  */
-Hue.prototype.description = function(callback) {
-  this.api.description(function(err, desc) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, desc) : console.log(desc));
-    }
+Hue.prototype.description = (callback) => {
+  this.api.description((err, desc) => {
+    callback(err, desc);
   });
-}
+};
 
 /**
  * Dim the lights
  */
-Hue.prototype.dim = function(id, value, callback) {
-  if (value == 0) {
-    this.api.setLightState(id, {'bri': value, 'on': false}, function(err, res) {
-      if (err) {
-        ((typeof callback === 'function') ? callback(err) : console.error(err));
-      } else {
-        ((typeof callback === 'function') ? callback(null, res) : console.log(res));
-      }
+Hue.prototype.dim = (id, value, callback) => {
+  if (value === 0) {
+    this.api.setLightState(id, { bri: value, on: false }, (err, res) => {
+      callback(err, res);
     });
   } else {
-    this.api.setLightState(id, {'bri': value, 'on': true}, function(err, res) {
-      if (err) {
-        ((typeof callback === 'function') ? callback(err) : console.error(err));
-      } else {
-        ((typeof callback === 'function') ? callback(null, res) : console.log(res));
-      }
+    this.api.setLightState(id, { bri: value, on: true }, (err, res) => {
+      callback(err, res);
     });
   }
-}
+};
 
 /**
  * Get Hue config
  */
-Hue.prototype.config = function(callback) {
-  this.api.getConfig(function(err, config) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, config) : console.log(config));
-    }
+Hue.prototype.config = (callback) => {
+  this.api.getConfig((err, config) => {
+    callback(err, config);
   });
-}
+};
 
 /**
  * Get full state of the Hue bridge and devices
  */
-Hue.prototype.fullState = function(callback) {
-  this.api.getFullState(function(err, state) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, state) : console.log(state));
-    }
+Hue.prototype.fullState = (callback) => {
+  this.api.getFullState((err, state) => {
+    callback(err, state);
   });
-}
+};
 
 /**
  * Get the lights attached to the Hue bridge
  */
-Hue.prototype.lights = function(callback) {
-  this.api.lights(function(err, lights) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, lights) : console.log(lights));
-    }
+Hue.prototype.lights = (callback) => {
+  this.api.lights((err, lights) => {
+    callback(err, lights);
   });
 };
 
 /**
  * Get the status of a single light
  */
-Hue.prototype.lightStatus = function(id, callback) {
-  this.api.lightStatus(id, function(err, result) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, result) : console.log(result));
-    }
+Hue.prototype.lightStatus = (id, callback) => {
+  this.api.lightStatus(id, (err, result) => {
+    callback(err, result);
   });
 };
 
@@ -105,43 +76,28 @@ Hue.prototype.lightStatus = function(id, callback) {
  * TODO If I get more lights, handle for this.
  *      At the moment I have one so the ID will always be one.
  */
-Hue.prototype.toggle = function(id, callback) {
-  let api = this.api;
-  api.lightStatus(id, function(err, result) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
+Hue.prototype.toggle = (id, callback) => {
+  const { api } = this;
+  api.lightStatus(id, (getErr, result) => {
+    if (getErr) {
+      callback(getErr);
     } else {
-      if (result.state.on) {
-        api.setLightState(id, {'on': false}, function(err, res) {
-          if (err) {
-            ((typeof callback === 'function') ? callback(err) : console.error(err));
-          } else {
-            ((typeof callback === 'function') ? callback(null, res) : console.log(res));
-          }
-        });
-      } else {
-        api.setLightState(id, {'on': true}, function(err, res) {
-          if (err) {
-            ((typeof callback === 'function') ? callback(err) : console.error(err));
-          } else {
-            ((typeof callback === 'function') ? callback(null, res) : console.log(res));
-          }
-        });
-      }
+      let lightValue = true;
+      if (result.state.on) lightValue = false;
+      api.setLightState(id, { on: lightValue }, (setErr, res) => {
+        callback(setErr, res);
+      });
     }
   });
-}
+};
 
 /**
  * Get Hue version
  */
-Hue.prototype.version = function(callback) {
-  this.api.getVersion(function(err, version) {
-    if (err) {
-      ((typeof callback === 'function') ? callback(err) : console.error(err));
-    } else {
-      ((typeof callback === 'function') ? callback(null, version) : console.log(version));
-    }
+Hue.prototype.version = (callback) => {
+  this.api.getVersion((err, version) => {
+    callback(err, version);
   });
-}
+};
+
 module.exports = Hue;

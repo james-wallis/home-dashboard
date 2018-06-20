@@ -1,3 +1,4 @@
+/* eslint-disable */
 var authenticated = false;
 var auth_url;
 var nowPlaying = null;

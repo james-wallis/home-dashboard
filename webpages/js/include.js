@@ -1,3 +1,4 @@
+/* eslint-disable */
 $(function(){
   $('#side-bar').load('sidebar.html');
   // $('#dashboard').load('dashboard.html');

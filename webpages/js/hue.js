@@ -1,3 +1,4 @@
+/* eslint-disable */
 var maxLight = 254;
 var brightness = {
   light: 0,

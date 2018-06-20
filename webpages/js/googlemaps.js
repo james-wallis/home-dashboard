@@ -1,3 +1,4 @@
+/* eslint-disable */
 var routes = [];
 
 // Event listeners
